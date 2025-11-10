@@ -1,6 +1,26 @@
-body {
+/*body {
     font-family: "Verdana" ;
     font-size: 2em;
-    color: blueviolet;
-    
+    color: red;
+}*/
+
+p{
+    border: 2px solid;
+    margin: 50px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    margin-left: 50px;
+    margin-left: 50px;
+
+    /* margin: 20px 10px 5px 30px; 
+
+    color: blueviolet; 
+    margin: 0px 20px;
+    padding: 10px, 20px; */
+
+    /* relative to static default position */
+    position: relative;
+    bottom: 20px;
+    left: 20px;
 }
+
