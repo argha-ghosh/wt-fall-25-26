@@ -1,11 +1,11 @@
-/*body {
+body {
     font-family: "Verdana" ;
     font-size: 2em;
     color: red;
-}*/
+}
 
 p{
-    border: 2px solid;
+    /* border: 2px solid; 
     margin: 50px;
     margin-top: 50px;
     margin-bottom: 50px;
