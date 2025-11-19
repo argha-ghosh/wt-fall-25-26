@@ -1,16 +1,6 @@
-const name = document.getElementById(`Username`)
-const password = document.getElementById(`password`)
-const form = document.getElementById(`form`)
-const errorElement = document.getElementById(`error`)
+let username;
 
-form.addEventListener(`submit`, (e) => {
-    let messages = []
-    if(username.value === '' || username.value == null){
-        messages.push('Name is required')
-    }
-    
-    if(messages.length > 0){
-        e.preventDefault()
-        errorElement.innerText = messages.join(',')
-    }
-})
+document.getElementById("mySubmit").onclick = function(){
+    username = document.getElementById("myText").value;
+    document.getElementById("myH1").textContent = `Hello ${username}`
+}

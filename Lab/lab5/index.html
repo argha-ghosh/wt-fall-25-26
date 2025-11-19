@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Grade Management System</title>
+</head>
+<body>
+
+<h2>Student Grade Management System</h2>
+
+<div>
+    <label>Name:</label>
+    <input id="nameInput" type="text">
+
+    <label>Grade (0-100):</label>
+    <input id="gradeInput" type="number">
+
+    <button onclick="addStudent()">Add</button>
+    <button onclick="clearAll()">Clear All</button>
+</div>
+
+<p id="error" style="color:red"></p>
+
+<h3>Student List</h3>
+
+<table border="1" width="100%">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Grade</th>
+            <th>Letter</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody id="studentTable"></tbody>
+</table>
+
+<h3>Statistics</h3>
+<div id="stats">No students added.</div>
+
+<br>
+
+<button onclick="doubleGrades()">Double Grades</button>
+<button onclick="resetGrades()">Reset Grades</button>
+<button onclick="sortGrades()">Sort High → Low</button>
+<button onclick="exportJSON()">Export JSON</button>
+
+<script>
+
+let students = [];
+let original = {};
+
+// Add a student
+function addStudent() {
+    const name = nameInput.value.trim();
+    const grade = Number(gradeInput.value);
+
+    error.innerText = "";
+
+    if (!name) {
+        error.innerText = "Name is required.";
+        return;
+    }
+    if (isNaN(grade) || grade < 0 || grade > 100) {
+        error.innerText = "Grade must be 0–100.";
+        return;
+    }
+
+    students.push({ name, grade });
+    original[name] = grade;
+
+    nameInput.value = "";
+    gradeInput.value = "";
+
+    render();
+}
+
+// Remove a student
+function removeStudent(name) {
+    students = students.filter(s => s.name !== name);
+    render();
+}
+
+// Clear all data
+function clearAll() {
+    students = [];
+    original = {};
+    render();
+}
+
+// Convert grade to letter
+function letter(g) {
+    if (g >= 90) return "A";
+    if (g >= 80) return "B";
+    if (g >= 70) return "C";
+    if (g >= 60) return "D";
+    return "F";
+}
+
+// Update table and stats
+function render() {
+    studentTable.innerHTML = "";
+
+    students.forEach(s => {
+        studentTable.innerHTML += `
+            <tr>
+                <td>${s.name}</td>
+                <td>${s.grade}</td>
+                <td>${letter(s.grade)}</td>
+                <td><button onclick="removeStudent('${s.name}')">Remove</button></td>
+            </tr>`;
+    });
+
+    updateStats();
+}
+
+// Update statistics
+function updateStats() {
+    if (students.length === 0) {
+        stats.innerHTML = "No students added.";
+        return;
+    }
+
+    const grades = students.map(s => s.grade);
+    const total = grades.length;
+
+    const avg = (grades.reduce((a, b) => a + b, 0) / total).toFixed(2);
+    const high = Math.max(...grades);
+    const low = Math.min(...grades);
+    const pass = grades.filter(g => g >= 50).length;
+    const rate = ((pass / total) * 100).toFixed(2);
+
+    stats.innerHTML = `
+        Total Students: ${total}<br>
+        Average Grade: ${avg}<br>
+        Highest Grade: ${high}<br>
+        Lowest Grade: ${low}<br>
+        Pass Rate: ${rate}%`;
+}
+
+// Double grades (max 100)
+function doubleGrades() {
+    students = students.map(s => ({
+        name: s.name,
+        grade: Math.min(100, s.grade * 2)
+    }));
+    render();
+}
+
+// Reset grades to original input
+function resetGrades() {
+    students = students.map(s => ({
+        name: s.name,
+        grade: original[s.name]
+    }));
+    render();
+}
+
+// Sort high → low
+function sortGrades() {
+    students.sort((a, b) => b.grade - a.grade);
+    render();
+}
+
+// Export as JSON file
+function exportJSON() {
+    const data = JSON.stringify(students, null, 2);
+    const blob = new Blob([data], { type: "application/json" });
+    const link = document.createElement("a");
+
+    link.href = URL.createObjectURL(blob);
+    link.download = "students.json";
+    link.click();
+}
+
+</script>
+
+</body>
+</html>
