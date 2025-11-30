@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Form Validation</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 720px; margin: 24px; }
+        label { display: block; margin-top: 12px; }
+        input, select { width: 100%; padding: 8px; box-sizing: border-box; margin-top: 4px; }
+        .controls { margin-top: 16px; display:flex; gap:8px; }
+        .error { color: #b00020; margin:6px 0 0; font-size:0.95em; min-height:1.2em; }
+        .hint { font-size:0.85em; color:#444; margin-top:4px; }
+    </style>
+</head>
+<body>
+    <h2>Registration Form</h2>
+
+    <form id="myForm" novalidate>
+        <label for="name">Name
+            <input id="name" name="name" type="text" autocomplete="name" />
+        </label>
+        <p class="error" id="err_name" aria-live="polite"></p>
+
+        <label for="father">Father's Name (no spaces)
+            <input id="father" name="father" type="text" autocomplete="off" />
+        </label>
+        <p class="error" id="err_father" aria-live="polite"></p>
+
+        <label for="mother">Mother's Name (at least 8 letters total; spaces allowed)
+            <input id="mother" name="mother" type="text" />
+            <div class="hint">Count excludes spaces; letters only.</div>
+        </label>
+        <p class="error" id="err_mother" aria-live="polite"></p>
+
+        <label for="phone">Phone (11 digits)
+            <input id="phone" name="phone" type="text" inputmode="numeric" maxlength="11" />
+        </label>
+        <p class="error" id="err_phone" aria-live="polite"></p>
+
+        <label for="age">Age
+            <input id="age" name="age" type="number" min="1" max="120" />
+        </label>
+        <p class="error" id="err_age" aria-live="polite"></p>
+
+        <label for="dob">Date of Birth
+            <input id="dob" name="dob" type="date" />
+        </label>
+        <p class="error" id="err_dob" aria-live="polite"></p>
+
+        <label for="city">City
+            <select id="city" name="city">
+                <option value="">-- Select City --</option>
+                <option>Dhaka</option>
+                <option>Chittagong</option>
+                <option>Khulna</option>
+                <option>Rajshahi</option>
+                <option>Rangpur</option>
+            </select>
+        </label>
+        <p class="error" id="err_city" aria-live="polite"></p>
+
+        <label for="pass">Password
+            <input id="pass" name="pass" type="password" />
+        </label>
+        <p class="error" id="err_pass" aria-live="polite"></p>
+
+        <label for="cpass">Confirm Password
+            <input id="cpass" name="cpass" type="password" />
+        </label>
+        <p class="error" id="err_cpass" aria-live="polite"></p>
+
+        <div class="controls">
+            <button type="submit">Submit</button>
+            <button type="button" id="deleteBtn">Delete (Reset)</button>
+            <button type="button" id="clearBtn">Clear Errors</button>
+        </div>
+    </form>
+
+    <script src="index.js"></script>
+</body>
+</html>
