@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Portal Signup</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f2f2;
+        }
+
+        .container {
+            width: 350px;
+            margin: 50px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 0 5px gray;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background: green;
+            color: white;
+            border: none;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: darkgreen;
+        }
+
+        #successMsg {
+            color: green;
+            text-align: center;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Student Signup</h2>
+
+    <form id="signupForm">
+
+        Full Name:
+        <input type="text" id="name">
+        <div class="error" id="nameError"></div>
+
+        Email:
+        <input type="text" id="email">
+        <div class="error" id="emailError"></div>
+
+        Password:
+        <input type="password" id="password">
+        <div class="error" id="passwordError"></div>
+
+        Confirm Password:
+        <input type="password" id="confirmPassword">
+        <div class="error" id="confirmError"></div>
+
+        Phone Number:
+        <input type="text" id="phone">
+        <div class="error" id="phoneError"></div>
+
+        <button type="submit">Register</button>
+
+        <div id="successMsg"></div>
+
+    </form>
+</div>
+
+<script>
+document.getElementById("signupForm").addEventListener("submit", function(event) {
+
+    event.preventDefault();  // Prevent form submission
+
+    // Get input values
+    let name = document.getElementById("name").value.trim();
+    let email = document.getElementById("email").value.trim();
+    let password = document.getElementById("password").value;
+    let confirmPassword = document.getElementById("confirmPassword").value;
+    let phone = document.getElementById("phone").value.trim();
+
+    // Error message elements
+    let nameError = document.getElementById("nameError");
+    let emailError = document.getElementById("emailError");
+    let passwordError = document.getElementById("passwordError");
+    let confirmError = document.getElementById("confirmError");
+    let phoneError = document.getElementById("phoneError");
+    let successMsg = document.getElementById("successMsg");
+
+    // Clear old messages
+    nameError.innerText = "";
+    emailError.innerText = "";
+    passwordError.innerText = "";
+    confirmError.innerText = "";
+    phoneError.innerText = "";
+    successMsg.innerText = "";
+
+    let valid = true;
+
+    // Name validation
+    if (name === "") {
+        nameError.innerText = "Full name is required";
+        valid = false;
+    }
+
+    // Email validation
+    if (email === "" || !email.includes("@") || !email.includes(".")) {
+        emailError.innerText = "Enter a valid email address";
+        valid = false;
+    }
+
+    // Password validation
+    if (password.length < 6) {
+        passwordError.innerText = "Password must be at least 6 characters";
+        valid = false;
+    }
+
+    // Confirm password validation
+    if (password !== confirmPassword) {
+        confirmError.innerText = "Passwords do not match";
+        valid = false;
+    }
+
+    // Phone number validation (digits only)
+    if (phone === "" || isNaN(phone)) {
+        phoneError.innerText = "Phone number must contain only digits";
+        valid = false;
+    }
+
+    // Final success message
+    if (valid) {
+        successMsg.innerText = "Registration Successful!";
+        document.getElementById("signupForm").reset();
+    }
+
+});
+</script>
+
+</body>
+</html>
+
